@@ -1,8 +1,10 @@
 package com.hotel.booking.project3.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.hotel.booking.project3.model.Bill;
 import com.hotel.booking.project3.model.Booking;
@@ -13,6 +15,7 @@ import com.hotel.booking.project3.repository.BookingRepository;
 import com.hotel.booking.project3.repository.CustomerRepository;
 import com.hotel.booking.project3.repository.PickupAndDropRepository;
 
+@Service
 public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
@@ -28,33 +31,45 @@ public class CustomerServiceImpl implements CustomerService {
 	BillRepository billRepository;
 
 	@Override
-	public int customerSignup(Customer customer) {
+	public boolean customerSignup(Customer customer) {
 		// TODO Auto-generated method stub
-		return 0;
+		System.out.println("Customer Signup Called");
+		customerRepository.save(customer);
+		return true;
 	}
 
 	@Override
 	public Customer customerLogin(String customerUserName, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Patient Login called");
+		return customerRepository.findByCustomerUserNameAndPassword(customerUserName, password);
+	}
+	
+	@Override
+	public boolean isCustomerExists(String customerUserName) {
+		Customer customer=customerRepository.findByCustomerUserName(customerUserName);
+		if(customer!=null)
+			return true;
+		else
+			return false;
 	}
 
 	@Override
-	public boolean isCustomerExists(int customerId) {
-		// TODO Auto-generated method stub
-		return false;
+	public Customer viewProfile(String customerUserName) {
+		Customer customer = customerRepository.findByCustomerUserName(customerUserName);
+		return customer;
 	}
-
+	
 	@Override
 	public boolean updateCustomer(Customer customer) {
 		// TODO Auto-generated method stub
-		return false;
+		customerRepository.save(customer);
+		return true;
 	}
 
 	@Override
-	public Customer getCustomerById(int customerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Customer getCustomerByUserName(String customerUserName) {	
+		Customer customer = customerRepository.findByCustomerUserName(customerUserName);
+		return customer;
 	}
 
 	@Override
@@ -63,11 +78,11 @@ public class CustomerServiceImpl implements CustomerService {
 		return false;
 	}
 
-	@Override
-	public List<Booking> viewBookingHistory(int customerId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public List<Booking> viewBookingHistory(int customerId) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	@Override
 	public boolean updateBooking(int bookingId) {
@@ -100,33 +115,45 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public boolean addPickAndDrop(int pickupAndDropId) {
-		// TODO Auto-generated method stub
-		return false;
+	public int addPickAndDrop(PickupAndDrop pickupAndDrop) {
+		pickupAndDropRepository.save(pickupAndDrop);
+		int pickupAndDropId = pickupAndDrop.getPickupAndDropId();
+		return pickupAndDropId;
 	}
 
 	@Override
 	public boolean updatePickAndDrop(PickupAndDrop pickupAndDrop) {
-		// TODO Auto-generated method stub
-		return false;
+		pickupAndDropRepository.save(pickupAndDrop);
+		return true;
 	}
 
 	@Override
 	public boolean cancelPickAndDrop(int pickupAndDropId) {
-		// TODO Auto-generated method stub
-		return false;
+		pickupAndDropRepository.deleteById(pickupAndDropId);
+		return true;
 	}
 
 	@Override
-	public List<Bill> totalBill(int customerId) {
+	public List<Bill> viewBill(String customerUserName) {
 		// TODO Auto-generated method stub
-		return null;
+		return (List<Bill>) billRepository.findByCustomerUserName(customerUserName);
 	}
+//
+//	@Override
+//	public int getCustomerId(String customerUserName) {
+//		Customer customerData = customerRepository.findByCustomerUserName(customerUserName);
+//		int customerId = customerData.getCustomerId();
+//		System.out.println(customerId);
+//		return customerId;
+//	}
 
 	@Override
-	public int getCustomerId(String customerUserName) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean isPickAndDropExists(int pickupAndDropId) {
+		Optional<PickupAndDrop> pickupAndDrop=pickupAndDropRepository.findById(pickupAndDropId);
+		if(pickupAndDrop!=null)
+			return true;
+		else
+			return false;
 	}
 
 }

@@ -9,24 +9,27 @@ import com.hotel.booking.project3.model.PickupAndDrop;
 
 public interface CustomerService {
 
-	public int customerSignup(Customer customer);
+	public boolean customerSignup(Customer customer);
 	public Customer customerLogin(String customerUserName, String password);
-	public boolean isCustomerExists(int customerId);
+	public boolean isCustomerExists(String customerUserName);
+	public Customer viewProfile(String customerUserName);
 	public boolean updateCustomer(Customer customer);
-	public Customer getCustomerById(int customerId);
+	public Customer getCustomerByUserName(String customerUserName);
 	
 	public boolean bookingForm(Booking booking);
-	public List<Booking> viewBookingHistory(int customerId);
+//	public List<Booking> viewBookingHistory(String customerUserName);
 	public boolean updateBooking(int bookingId);
 	public boolean cancelBooking(int bookingId);
 	public boolean addRoom(int bookingId);
 	public boolean updateRoom(int bookingId);
 	public boolean addExtraFood(int billNo);
 	
-	public boolean addPickAndDrop(int pickupAndDropId);
+	public int addPickAndDrop(PickupAndDrop pickupAndDrop);
 	public boolean updatePickAndDrop(PickupAndDrop pickupAndDrop);
 	public boolean cancelPickAndDrop(int pickupAndDropId);
-
-	public List<Bill> totalBill(int customerId);
-	public int getCustomerId(String customerUserName);
+	public boolean isPickAndDropExists(int pickupAndDropId);
+	
+	public List<Bill> viewBill(String customerUserName);
+//	
+//	public int getCustomerId(String customerUserName);
 }

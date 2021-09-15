@@ -15,7 +15,7 @@ public class Booking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int bookingId; 
-	private int customerId;
+	private int customerUserName;
 	private int idProof;
 	private int roomType;
 	private int numberOfRoom;
@@ -27,5 +27,8 @@ public class Booking {
     private String checkOutDate;
 	private String pickupAndDrop;
 	private boolean Cancellation=false;
-    
+	private String bookingStatus;
+//	private Room roomPrice; 
+//take the price from based on room type and room size
+  
 }

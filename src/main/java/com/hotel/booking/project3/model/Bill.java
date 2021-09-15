@@ -15,7 +15,7 @@ public class Bill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int billNo; 
-	private int customerId;
+	private int customerUserName;
 	private int roomBill;
 	private int breakfastBill; 
 	private int drinksBill; 

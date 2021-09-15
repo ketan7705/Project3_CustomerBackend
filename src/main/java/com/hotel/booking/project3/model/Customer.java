@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
 
@@ -12,10 +13,8 @@ import lombok.Data;
 @Entity
 @Table(name = "customerdetails")
 public class Customer {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int customerId;
 	private String customerName;
+	@Id
 	private String customerUserName;
 	private String password;
 	private String mobileNumber;
@@ -24,5 +23,5 @@ public class Customer {
 	private int age;
 	private String city;
 	private String state;
-	private String location;
+	private String country;
 }
