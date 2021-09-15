@@ -1,5 +1,6 @@
 package com.hotel.booking.project3.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,24 +11,25 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "bookingdetails")
+@Table(name = "bookingformdetails")
 public class Booking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int bookingId; 
-	private int customerUserName;
-	private int idProof;
-	private int roomType;
+	private String customerUserName;
+	private String email;
+	private String idProof;
+	private String roomType;
 	private int numberOfRoom;
-	private int roomSize;
+	private String roomSize;
 	private int roomNumber;
     private String breakfast;
     private String drinks;
     private String checkInDate;
     private String checkOutDate;
 	private String pickupAndDrop;
-	private boolean Cancellation=false;
-	private String bookingStatus;
+	private String cancellation="False";
+	private String bookingStatus="Pending";
 //	private Room roomPrice; 
 //take the price from based on room type and room size
   

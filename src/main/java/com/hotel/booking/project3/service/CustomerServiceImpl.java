@@ -73,46 +73,29 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public boolean bookingForm(Booking booking) {
-		// TODO Auto-generated method stub
-		return false;
+	public int bookingForm(Booking booking) {
+		bookingRepository.save(booking);
+		int bookingId = booking.getBookingId();
+		return bookingId;
 	}
 
-//	@Override
-//	public List<Booking> viewBookingHistory(int customerId) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public List<Booking> viewBookingHistory(String customerUserName) {
+		return (List<Booking>) bookingRepository.findByCustomerUserName(customerUserName);
+	}
 
 	@Override
-	public boolean updateBooking(int bookingId) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean updateBooking(Booking booking) {
+		bookingRepository.save(booking);
+		return true;
 	}
 
 	@Override
 	public boolean cancelBooking(int bookingId) {
-		// TODO Auto-generated method stub
+		bookingRepository.deleteById(bookingId);
 		return false;
 	}
 
-	@Override
-	public boolean addRoom(int bookingId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean updateRoom(int bookingId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addExtraFood(int billNo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public int addPickAndDrop(PickupAndDrop pickupAndDrop) {
@@ -151,6 +134,15 @@ public class CustomerServiceImpl implements CustomerService {
 	public boolean isPickAndDropExists(int pickupAndDropId) {
 		Optional<PickupAndDrop> pickupAndDrop=pickupAndDropRepository.findById(pickupAndDropId);
 		if(pickupAndDrop!=null)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public boolean isBookingExists(int bookingId) {
+		Optional<Booking> booking=bookingRepository.findById(bookingId);
+		if(booking!=null)
 			return true;
 		else
 			return false;

@@ -16,13 +16,11 @@ public interface CustomerService {
 	public boolean updateCustomer(Customer customer);
 	public Customer getCustomerByUserName(String customerUserName);
 	
-	public boolean bookingForm(Booking booking);
-//	public List<Booking> viewBookingHistory(String customerUserName);
-	public boolean updateBooking(int bookingId);
+	public int bookingForm(Booking booking);
+	public List<Booking> viewBookingHistory(String customerUserName);
+	public boolean updateBooking(Booking booking);
 	public boolean cancelBooking(int bookingId);
-	public boolean addRoom(int bookingId);
-	public boolean updateRoom(int bookingId);
-	public boolean addExtraFood(int billNo);
+	public boolean isBookingExists(int bookingId);
 	
 	public int addPickAndDrop(PickupAndDrop pickupAndDrop);
 	public boolean updatePickAndDrop(PickupAndDrop pickupAndDrop);

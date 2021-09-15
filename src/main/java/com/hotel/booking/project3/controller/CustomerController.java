@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hotel.booking.project3.model.Bill;
+import com.hotel.booking.project3.model.Booking;
 import com.hotel.booking.project3.model.Customer;
 import com.hotel.booking.project3.model.ForgetPassword;
 import com.hotel.booking.project3.model.PickupAndDrop;
@@ -182,6 +183,49 @@ public class CustomerController {
 		}else {
 			responseEntity = new ResponseEntity<List<Bill>>(bills, HttpStatus.OK);
 			
+		}
+		return responseEntity;
+	}
+	
+	
+	@PostMapping("/bookingForm")
+	public ResponseEntity<Integer> bookingForm(@RequestBody Booking booking) {
+		ResponseEntity<Integer> responseEntity = null;
+		int bookingId;
+		bookingId = customerService.bookingForm(booking);
+		responseEntity = new ResponseEntity<Integer>(bookingId, HttpStatus.OK);
+		return responseEntity;
+	}
+	
+	@PutMapping("/updateBooking/{bookingId}")
+	public ResponseEntity<String> updateBooking(@RequestBody Booking booking,@PathVariable("bookingId") int bookingId) {
+		ResponseEntity<String> responseEntity = null;
+		String message = null;
+
+		if (customerService.isBookingExists(bookingId)) {
+			booking.setBookingId(bookingId);
+			customerService.updateBooking(booking);
+			message = "updated successfully";
+			responseEntity = new ResponseEntity<String>(message, HttpStatus.NO_CONTENT);
+		} else {
+			message = "PickupAndDrop ID is not Exist";
+			responseEntity = new ResponseEntity<String>(message, HttpStatus.NO_CONTENT);
+		}
+		return responseEntity;
+	}
+	
+	@DeleteMapping("/cancelBooking/{bookingId}")
+	public ResponseEntity<String> cancelBooking(@PathVariable("bookingId") int bookingId) {
+		ResponseEntity<String> responseEntity = null;
+		String message = null;
+		
+		if (customerService.isBookingExists(bookingId)) {
+			customerService.cancelBooking(bookingId);
+			message = "Deleted successfully";
+			responseEntity = new ResponseEntity<String>(message, HttpStatus.OK);
+		} else {
+			message = "Booking ID is not Exist";
+			responseEntity = new ResponseEntity<String>(message, HttpStatus.NO_CONTENT);
 		}
 		return responseEntity;
 	}
